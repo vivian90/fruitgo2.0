@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Dispatch } from 'react';
+import {connect, DispatchProp} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
+import {fetchFruits} from './Actions';
 
-const App: React.FC = () => {
+const App: React.FC = (props: any) => {
+  const { dispatch, fruits } = props;
+  dispatch(fetchFruits);
+  console.log(fruits);
   return (
     <div className="App">
       <header className="App-header">
@@ -22,5 +27,9 @@ const App: React.FC = () => {
     </div>
   );
 }
-
-export default App;
+function mapStateToProps (state: any) {
+  return {
+    fruits: state.fruit.fruits
+  }
+}
+export default connect(mapStateToProps, null)(App);
