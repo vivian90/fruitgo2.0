@@ -3,27 +3,43 @@ import {connect, DispatchProp} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import {fetchFruits} from './Actions';
+import {AutoComplete} from 'antd';
+import "antd/dist/antd.css";
+import FruitInfo from './Components/fruitInfo'
 
 const App: React.FC = (props: any) => {
   const { dispatch, fruits } = props;
   dispatch(fetchFruits);
-  console.log(fruits);
+ // console.log(fruits);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AutoComplete />
+      <div style={{display: 'flex'}} >
+        <FruitInfo 
+          title="banana" 
+          src="https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/7/6/3/6/866367-1-eng-GB/KSA-s-HAQ-starts-new-banana-contract.jpg" 
+          price={1.50}
+          star={4}
+        />
+        <FruitInfo 
+          title="banana" 
+          src="https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/7/6/3/6/866367-1-eng-GB/KSA-s-HAQ-starts-new-banana-contract.jpg" 
+          price={1.50}
+          star={3.5}
+        />
+        <FruitInfo 
+          title="banana" 
+          src="https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/7/6/3/6/866367-1-eng-GB/KSA-s-HAQ-starts-new-banana-contract.jpg" 
+          price={1.50}
+          star={4}
+        />
+        <FruitInfo 
+          title="banana" 
+          src="https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/7/6/3/6/866367-1-eng-GB/KSA-s-HAQ-starts-new-banana-contract.jpg" 
+          price={1.50}
+          star={1}
+        />
+      </div>
     </div>
   );
 }
