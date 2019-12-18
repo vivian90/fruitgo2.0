@@ -1,12 +1,13 @@
 import { Action } from "../types";
-import {FETCH_FRUITS, fetchFruits} from '../Actions';
+import {FETCH_FRUITS, fetchFruits, FETCH_FRUITS_BY_FILTERS, fetchFruitsByFilter} from '../Actions';
 
 interface State {
   fruits: any[];
 }
-
+const lb = 'LB'
+const count = 'Count' 
 const initialState : State = {
-  fruits: [],
+  fruits: []
 };
 
 export function fruitReducer(state = initialState, action: Action) {
@@ -17,7 +18,7 @@ export function fruitReducer(state = initialState, action: Action) {
            fruits: action.data
          }
       }
-        default: 
+      default: 
           return state;
     } 
 }
