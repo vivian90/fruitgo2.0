@@ -2,8 +2,8 @@ import React, { Dispatch } from 'react';
 import {connect, DispatchProp} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
-import {fetchFruits} from './Actions';
-import {AutoComplete, PageHeader, Row, Col, Checkbox} from 'antd';
+import {fetchFruits, changePage, searchByText} from './Actions';
+import {AutoComplete, PageHeader, Row, Col, Pagination} from 'antd';
 import "antd/dist/antd.css";
 import FruitInfo from './Components/fruitInfo'
 import Menu from './Components/Menu';
@@ -11,11 +11,13 @@ import { Category } from './Reducers/SearchReducer';
 
 interface IProps {
   fruits?: any[],
+  pageNumber: number,
   fetchFruits: () => void,
+  changePage: (page: number) => void,
+  searchByText: (text: string) => void
 }
 
 class App extends React.Component<IProps> {
-
   state = {
     headerMenu: [
       {
@@ -27,28 +29,26 @@ class App extends React.Component<IProps> {
         breadcrumbName: 'See your orders',
       }
     ],
-    menu: [
-      {
-        catgory: "fresh",
-        title: "Fresh Fruits"
-      },
-      {
-        catgory: "dry",
-        title: "Dry Fruits"
-      },
-      {
-        category: "juice",
-        title: "Juice"
-      }
-    ]
+    pageNumber: 1,
+    countPerPage: 10,
+  
   };
  componentDidMount () {
     this.props.fetchFruits();
  }
-
+ handlePageChange = (page : number) => {
+    this.props.changePage(page);
+ }
+ handleSearch = (text: string) => {
+   if (text == "") return;
+   this.props.searchByText(text);
+ }
 
  render(){
-   const { fruits } = this.props; 
+   const {fruits, pageNumber} = this.props;
+   const countPerPage = 10;
+   const total = fruits ? fruits.length : 0;
+   const currentFruits = fruits ? fruits.slice((pageNumber - 1) * countPerPage, pageNumber * countPerPage) : [];
 
     return (
       <div className="App">
@@ -65,21 +65,30 @@ class App extends React.Component<IProps> {
                    <Menu/>
                 </Col>
                 <Col span={20} className="content">
-                  <div style={{alignContent:'left'}}>
+                  <div>
                     <label style={{marginRight: '10px'}}>Search what your want:</label>
-                    <AutoComplete />
+                    <AutoComplete onSearch={(text) => this.handleSearch(text)}/>
                   </div>
                   <div style={{display: 'flex', flexWrap: 'wrap'}}  className="content">
-                    {fruits && fruits.map(fruit => (
+                    {currentFruits && currentFruits.map(fruit => (
                         <FruitInfo 
-                        key={fruit.id}
-                        name={fruit.name}
-                        src={fruit.src}
-                        price={fruit.price.toFixed(2)}
-                        star={fruit.star}
-                        unit={fruit.unit}
+                          key={fruit.id}
+                          name={fruit.name}
+                          src={fruit.src}
+                          price={fruit.price.toFixed(2)}
+                          star={fruit.star}
+                          unit={fruit.unit}
                       />
                     ))}
+                  </div>
+                  <div>
+                    <Pagination 
+                      size="small" 
+                      total={total} 
+                      showTotal={() => (`Total ${total} items`)}
+                      onChange={(page) => this.handlePageChange(page)}
+                      current={pageNumber}
+                    />
                   </div>
                 </Col>    
               </Row>
@@ -88,8 +97,11 @@ class App extends React.Component<IProps> {
     );
   }
 }
-const getFilteredFruits = (fruits: any[], filters: Category[]) => {
+const getFilteredFruits = (fruits: any[], filters: Category[], searchText: string) => {
   let res = fruits, categoryToCount:{[key: string]: any} = {};
+  if (searchText != "") {
+    res = res.filter(fruit => fruit.name.indexOf(searchText) > -1);
+  }
   filters = filters.filter(f => f.isChecked);
   for (let filter of filters) {
     if (categoryToCount[filter.cateKey] == undefined) {
@@ -102,13 +114,17 @@ const getFilteredFruits = (fruits: any[], filters: Category[]) => {
   for (let filter of filters) {
     res = res.filter(fruit => categoryToCount[filter.cateKey].indexOf(fruit[filter.cateKey]) > - 1);
   }
+
   return res;
 }
 function mapStateToProps (state: any) {
   return {
-    fruits: getFilteredFruits(state.fruit.fruits, state.search),
+    fruits: getFilteredFruits(state.fruit.fruits, state.search.categories, state.search.searchText),
+    pageNumber: state.pageNumber
   }
 }
 export default connect(mapStateToProps, {
   fetchFruits,
+  changePage,
+  searchByText
 })(App);

@@ -1,5 +1,4 @@
-import React, { Component } from 'react'
-import {fetchCategoryInfo, FETCH_MENU_INFO, toggleFilter, TOGGLE_FILTERS} from '../Actions/fetchCategoryInfo';
+import {FETCH_MENU_INFO, TOGGLE_FILTERS, SEARCH_BY_TEXT} from '../Actions/fetchCategoryInfo';
 import {Action} from '../types';
 
 export interface Category {
@@ -11,21 +10,42 @@ export interface Category {
   cateKey: string
 }
 
-const initialState: Category[] = []
+export interface State {
+  categories: Category[],
+  searchText: ""
+}
+
+const initialState: State = {
+  categories: [],
+  searchText: ""
+}
 
 export function categoryReducer(state = initialState, action: Action) {
     switch (action.type) {
       case FETCH_MENU_INFO: {
-        return [...action.data];
+        return {
+          ...state,
+          categories: [...action.data]
+        }
       }
       case TOGGLE_FILTERS: {
-       return state.map(filter => {
+          let cates = state.categories.map(filter => {
           let tmp = { ...filter }
           if (tmp.id.toString() == action.id) {
             tmp.isChecked = !tmp.isChecked;
           }
           return tmp;
-        })  
+        });
+        return {
+          ...state,
+          categories: cates
+        }
+      }
+      case SEARCH_BY_TEXT: {
+        return {
+          ...state,
+          searchText: action.text
+        }
       }
       default: return state;
     }

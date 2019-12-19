@@ -2,6 +2,7 @@ import { FruitCategory } from "../types";
 
 export const FETCH_MENU_INFO = 'FETCH_MENU_INFO';
 export const TOGGLE_FILTERS = 'TOGGLE_FILTERS';
+export const SEARCH_BY_TEXT = 'SEARCH_BY_TEXT';
 
 export const fetchCategoryInfo = () => ({
   type: FETCH_MENU_INFO,
@@ -52,5 +53,10 @@ export const fetchCategoryInfo = () => ({
 export const toggleFilter = (id: number) => ({
   type: TOGGLE_FILTERS,
   id
+})
+
+export const searchByText = (text: string) => ({
+  type: SEARCH_BY_TEXT,
+  text
 })
 

@@ -20,7 +20,6 @@ interface SubMenuProps {
 
 class Menu extends React.Component<MenuProps> {
    getCategoriItems = (items: any[]) => {
-     console.log(items)
       let hash: {[key: string]: any} = {}, res = [];
       for (let item of items) {
         let cate = item.category;
@@ -87,7 +86,7 @@ export function SubMenu (props: SubMenuProps) {
 }
 
 const mapStateToProps = (state: any) => ({
-    menuitems: state.search
+    menuitems: state.search.categories
 });
 
 export default connect(mapStateToProps, {
