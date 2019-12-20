@@ -1,13 +1,21 @@
 import { Action } from "../types";
-import {FETCH_FRUITS, fetchFruits, FETCH_FRUITS_BY_FILTERS, fetchFruitsByFilter} from '../Actions';
+import {FETCH_FRUITS, BUY_CURRENT_FRUIT, CLEAR_CURRENT_FRUIT, ADD_CUR_TO_CART} from '../Actions';
 
+export interface FruitItem {
+  id: number,
+  quantity: number
+}
 interface State {
   fruits: any[];
+  currentFruitId: number,
+  fruitInCart: FruitItem[]
 }
 const lb = 'LB'
 const count = 'Count' 
 const initialState : State = {
-  fruits: []
+  fruits: [],
+  currentFruitId: -1,
+  fruitInCart: []
 };
 
 export function fruitReducer(state = initialState, action: Action) {
@@ -17,6 +25,24 @@ export function fruitReducer(state = initialState, action: Action) {
            ...state,
            fruits: action.data
          }
+      }
+      case BUY_CURRENT_FRUIT: {
+        return {
+          ...state,
+          currentFruitId: action.id
+        }
+      }
+      case CLEAR_CURRENT_FRUIT: {
+        return {
+          ...state,
+          currentFruitId: -1
+        }
+      }
+      case ADD_CUR_TO_CART: {
+        return {
+          ...state,
+          fruitInCart: [...state.fruitInCart, action.fruit]
+        }
       }
       default: 
           return state;

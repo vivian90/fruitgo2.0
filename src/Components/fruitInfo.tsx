@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Rate} from 'antd';
+import {Rate, Button} from 'antd';
 import styles from './fruitInfo.module.scss';
 
 interface fruitInfoProps {
@@ -7,7 +7,9 @@ interface fruitInfoProps {
   name: string,
   price: number,
   star: number,
-  unit: string
+  unit: string,
+  id: number,
+  handleBuyFruit: (id: number) => void
 }
 
 export const toCapital = (str: string) => {
@@ -20,14 +22,24 @@ export const toCapital = (str: string) => {
 }
 
 export default function FruitInfo (props : fruitInfoProps) {
-    const {src, name, price, star, unit} = props;
+    const {src, name, price, star, unit, handleBuyFruit, id} = props;
 
     return (
       <div className={styles.info}>
         <img src={src} />
         <h4>{toCapital(name)}</h4>
         <Rate disabled defaultValue={star} />
-        <p>{`${price} / ${unit}`}</p>
+        <div>
+          <p style={{display:"inline-block"}}>{`${price} / ${unit}`}</p>
+          <Button 
+            style={{float: 'right'}} 
+            type="primary" 
+            size="small"
+            onClick={() => handleBuyFruit(id)}
+          >
+            Buy
+          </Button>
+        </div>   
       </div>
     )
 }

@@ -1,7 +1,11 @@
 import {Category} from '../Reducers/SearchReducer';
 import { FruitCategory } from '../types';
+import {FruitItem} from "../Reducers/fruitReducer";
 export const FETCH_FRUITS = "FETCH_FRUITS";
 export const FETCH_FRUITS_BY_FILTERS  = "FETCH_FRUITS_BY_FILTERS";
+export const BUY_CURRENT_FRUIT = "BUY_CURRENT_FRUIT";
+export const CLEAR_CURRENT_FRUIT = "CLEAR_CURRENT_FRUIT";
+export const ADD_CUR_TO_CART = "ADD_CUR_TO_CART";
 
 const lb = 'LB'
 const count = 'Count'
@@ -157,4 +161,16 @@ export const fetchFruitsByFilter = (filters: Category[]) => ({
   filters
 })
 
+export const buyCurrentFruit = (id: number) => ({
+  type: BUY_CURRENT_FRUIT,
+  id
+})
 
+export const clearCurrentFruit = () => ({
+  type: CLEAR_CURRENT_FRUIT
+})
+
+export const addToCart = (fruit: FruitItem) => ({
+  type: ADD_CUR_TO_CART,
+  fruit
+})
