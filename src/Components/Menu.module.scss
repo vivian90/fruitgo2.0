@@ -2,6 +2,8 @@
   padding: 5px;
   padding-left: 30px;
   margin: 10px 0px;
+  display: flex;
+  flex-direction: column;
 
   :global {
     .ant-checkbox-wrapper {

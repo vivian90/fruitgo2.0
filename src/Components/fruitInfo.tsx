@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Rate, Button} from 'antd';
 import styles from './fruitInfo.module.scss';
 
+
 interface fruitInfoProps {
   src : string,
   name: string,

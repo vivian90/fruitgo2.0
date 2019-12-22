@@ -1,11 +1,30 @@
 import {Category} from '../Reducers/SearchReducer';
-import { FruitCategory } from '../types';
-import {FruitItem} from "../Reducers/fruitReducer";
+import { FruitCategory, OrderItem } from '../types';
+
 export const FETCH_FRUITS = "FETCH_FRUITS";
 export const FETCH_FRUITS_BY_FILTERS  = "FETCH_FRUITS_BY_FILTERS";
 export const BUY_CURRENT_FRUIT = "BUY_CURRENT_FRUIT";
 export const CLEAR_CURRENT_FRUIT = "CLEAR_CURRENT_FRUIT";
 export const ADD_CUR_TO_CART = "ADD_CUR_TO_CART";
+export const REMOVE_FRUIT_IN_CART = "REMOVE_FRUIT_IN_CART";
+export const PURCHASE_ALL_FRUITS = "PURCHASE_ALL_FRUITS";
+
+
+export interface FruitItem {
+  id: number, 
+  name: string,
+  price: number , 
+  star: number, 
+  src: string,
+  category: number,
+  isOrganic: boolean,
+  isFreeshipping: boolean,
+  unit: string
+}
+
+export interface FruitInfo {
+  [key: number]: number
+}
 
 const lb = 'LB'
 const count = 'Count'
@@ -137,7 +156,7 @@ export const fetchFruits = () => ({
       name: "pineapple", 
       price: 3.99, 
       star: 4, 
-      src:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTL7qw0OqpuPwT5N8q2QjFjlF2VidVnLwYZJnN8XMi0ObBK2M1CMw&s",
+      src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyu2jqODS20TC1VQntQ8f2UKy3wO0tqfiNWEi9dmyLi2-eLT2U&s",
       category: FruitCategory.fresh,
       isOrganic: true,
       isFreeshipping: false,
@@ -170,7 +189,17 @@ export const clearCurrentFruit = () => ({
   type: CLEAR_CURRENT_FRUIT
 })
 
-export const addToCart = (fruit: FruitItem) => ({
+export const addToCart = (fruitInfo: {[key: number]: number}) => ({
   type: ADD_CUR_TO_CART,
-  fruit
+  fruitInfo
+})
+
+export const deleteFruit = (id: number) => ({
+  type: REMOVE_FRUIT_IN_CART,
+  id
+})
+
+export const purchaseAll = (order: OrderItem) => ({
+  type: PURCHASE_ALL_FRUITS,
+  order
 })

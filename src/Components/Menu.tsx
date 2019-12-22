@@ -5,6 +5,7 @@ import {fetchCategoryInfo, toggleFilter, fetchFruitsByFilter} from '../Actions';
 import { Category } from '../Reducers/SearchReducer';
 import styles from './Menu.module.scss';
 
+
 interface MenuProps {
   menuitems: Category[],
   fetchCategoryInfo: () => void;

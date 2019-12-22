@@ -1,0 +1,19 @@
+.container {
+  margin: 20px;
+}
+
+.order {
+  font-size: 12px;
+  border: 1px solid #F7F6F6;
+  border-radius: 5px;
+  margin: 10px;
+
+  .header {
+    background: #F7F6F6;
+    padding: 15px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}

@@ -1,21 +1,33 @@
-import { Action } from "../types";
-import {FETCH_FRUITS, BUY_CURRENT_FRUIT, CLEAR_CURRENT_FRUIT, ADD_CUR_TO_CART} from '../Actions';
+import { Action, OrderItem } from "../types";
+import {
+  FETCH_FRUITS, 
+  BUY_CURRENT_FRUIT, 
+  CLEAR_CURRENT_FRUIT, 
+  ADD_CUR_TO_CART,
+  REMOVE_FRUIT_IN_CART,
+  PURCHASE_ALL_FRUITS,
+  FruitInfo
+} from '../Actions';
 
-export interface FruitItem {
-  id: number,
-  quantity: number
-}
 interface State {
   fruits: any[];
   currentFruitId: number,
-  fruitInCart: FruitItem[]
+  fruitInCart: FruitInfo,
+  orders: OrderItem[]
 }
 const lb = 'LB'
 const count = 'Count' 
+
 const initialState : State = {
   fruits: [],
   currentFruitId: -1,
-  fruitInCart: []
+  fruitInCart: {},
+  orders: [{
+    fruitList: {1: 2, 3: 3},
+    purchaseTime: new Date().toString(),
+    sum: 20,
+    orderNumber: 1
+  }]
 };
 
 export function fruitReducer(state = initialState, action: Action) {
@@ -41,7 +53,29 @@ export function fruitReducer(state = initialState, action: Action) {
       case ADD_CUR_TO_CART: {
         return {
           ...state,
-          fruitInCart: [...state.fruitInCart, action.fruit]
+          fruitInCart: {
+            ...state.fruitInCart,
+            ...action.fruitInfo
+          }
+        }
+      }
+      case REMOVE_FRUIT_IN_CART: {
+        let fruitInCart = {...state.fruitInCart};
+        delete fruitInCart[action.id];
+
+        return {
+          ...state,
+          fruitInCart
+        }
+      }
+      case PURCHASE_ALL_FRUITS: {
+        let orders = [...state.orders];
+        orders.push(action.order);
+        let fruitInCart = {};
+        return {
+          ...state,
+          orders,
+          fruitInCart
         }
       }
       default: 

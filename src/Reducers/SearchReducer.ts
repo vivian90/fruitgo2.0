@@ -1,4 +1,4 @@
-import {FETCH_MENU_INFO, TOGGLE_FILTERS, SEARCH_BY_TEXT} from '../Actions/fetchCategoryInfo';
+import {FETCH_MENU_INFO, TOGGLE_FILTERS, SEARCH_BY_TEXT} from '../Actions';
 import {Action} from '../types';
 
 export interface Category {

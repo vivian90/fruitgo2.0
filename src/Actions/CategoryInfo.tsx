@@ -33,16 +33,16 @@ export const fetchCategoryInfo = () => ({
     },
     {
       id: 4,
-      category: 'Fresshipping',
-      title: "Freeshipping",
+      category: 'Freeshipping',
+      title: "Free-shipping",
       isChecked: false,
       value: true,
       cateKey: "isFreeshipping"
     },
     {
       id: 5,
-      category: 'Fresshipping',
-      title: "No Need",
+      category: 'Freeshipping',
+      title: "Non Free-shipping",
       isChecked: false,
       value: false,
       cateKey: "isFreeshipping"
