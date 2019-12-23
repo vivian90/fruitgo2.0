@@ -7,7 +7,6 @@ import { toCapital } from './fruitInfo';
 import { OrderItem } from '../types';
 import { Redirect } from 'react-router';
 
-
 interface IProps {
   fruitInCart: FruitInfo,
   fruits: any[],
@@ -61,7 +60,6 @@ class CartDetails extends Component<IProps> {
      this.setState({
       hasPlacedOrder: true
      })
-    
   }
 
   getTotal = () => {

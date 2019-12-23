@@ -116,18 +116,23 @@ class App extends React.Component<IProps> {
             </Link>
           ]}
         />
-        <Menu mode="horizontal">
-          <Menu.Item key="home">
-           <Link to="/">
-                Home
-           </Link>
-          </Menu.Item>
-          <Menu.Item key="orders">
-           <Link to="/orders">
-                Orders
-           </Link>
-          </Menu.Item>
-        </Menu>
+        <Route render={(props) => {
+          const currentPath = props.location.pathname
+          return (
+          <Menu mode="horizontal" selectedKeys={[currentPath.length > 1 ? currentPath.slice(1): "home"]}>
+            <Menu.Item key="home">
+              <Link to="/">
+                    Home
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="orders">
+              <Link to="/orders">
+                    Orders
+              </Link>
+            </Menu.Item>
+          </Menu>
+        )}} />
+
         <Switch>
           <Route path="/cart">
             <CartDetails />
